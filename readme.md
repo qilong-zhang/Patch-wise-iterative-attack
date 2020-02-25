@@ -23,13 +23,9 @@
 
 ## Results
 
-![TIM截图20200225160731](C:\Users\MSI\Desktop\TIM截图20200225160731.png)
+![TIM截图20200225160731](TIM截图20200225160731.png)
 
 
 
 ### Citation
-If you use our method for attacks in your research, please consider citing
 
-    
-
-## 
