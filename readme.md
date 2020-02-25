@@ -23,7 +23,7 @@
 
 ## Results
 
-![result](E:\Code\Projection iterative attack\result.png)
+![result](result.png)
 
 
 
