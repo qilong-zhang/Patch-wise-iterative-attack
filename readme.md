@@ -25,7 +25,7 @@ In this paper, we propose a novel  **patch-wise iterative  Attacks** by using th
 
 ![](https://github.com/qilong-zhang/patch-wise-iterative-attack/blob/master/readme_img/illustration.png)
 
-![result](https://github.com/qilong-zhang/patch-wise-iterative-attack/blob/master/readme_img/illustration.png)
+![result](https://github.com/qilong-zhang/patch-wise-iterative-attack/blob/master/readme_img/result.png)
 
 
 
