@@ -72,28 +72,32 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
     eps = 2.0 * FLAGS.max_epsilon / 255.0
     num_iter = FLAGS.num_iter
     alpha = eps / num_iter
+    momentum = FLAGS.momentum
+    	
     # amplification factor
     beta = alpha * FLAGS.amplification_factor
     gamma = beta
-    momentum = FLAGS.momentum
 
+
+    # DIM: https://arxiv.org/abs/1803.06978
+    # input_diversity(FLAG, x)
     with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
         logits_v3, end_points_v3 = inception_v3.inception_v3(
-              input_diversity(FLAGS, x), num_classes = FLAGS.num_classes, is_training = False)
+              x, num_classes = FLAGS.num_classes, is_training = False)
     auxlogits_v3 = end_points_v3['AuxLogits']
 
     with slim.arg_scope(inception_v4.inception_v4_arg_scope()):
         logits_v4, end_points_v4 = inception_v4.inception_v4(
-                input_diversity(FLAGS, x), num_classes = FLAGS.num_classes, is_training = False)
+                x, num_classes = FLAGS.num_classes, is_training = False)
     auxlogits_v4 = end_points_v4['AuxLogits']
 
     with slim.arg_scope(resnet_v2.resnet_arg_scope()):
         logits_resnet, end_points_resnet = resnet_v2.resnet_v2_152(
-                input_diversity(FLAGS, x), num_classes = FLAGS.num_classes, is_training = False)
+                x, num_classes = FLAGS.num_classes, is_training = False)
 
     with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
         logits_Incres, end_points_IR = inception_resnet_v2.inception_resnet_v2(
-                input_diversity(FLAGS, x), num_classes = FLAGS.num_classes, is_training = False)
+                x, num_classes = FLAGS.num_classes, is_training = False)
     auxlogits_IR = end_points_IR['AuxLogits']
 
     logits = (logits_v3 + logits_v4 + logits_resnet + logits_Incres) / 4.0
@@ -107,8 +111,6 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
                                                      label_smoothing=0.0,
                                                      weights=1.0)
 
-    # DIM: https://arxiv.org/abs/1803.06978
-    # x = input_diversity(FLAG, x)
 
     noise = tf.gradients(cross_entropy, x)[0]
 
