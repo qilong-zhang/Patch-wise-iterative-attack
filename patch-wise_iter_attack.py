@@ -72,6 +72,7 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
     eps = 2.0 * FLAGS.max_epsilon / 255.0
     num_iter = FLAGS.num_iter
     alpha = eps / num_iter
+    # amplification factor
     beta = alpha * FLAGS.amplification_factor
     gamma = beta
     momentum = FLAGS.momentum
@@ -106,24 +107,31 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
                                                      label_smoothing=0.0,
                                                      weights=1.0)
 
+    # DIM: https://arxiv.org/abs/1803.06978
+    # x = input_diversity(FLAG, x)
+
     noise = tf.gradients(cross_entropy, x)[0]
+
     # TI-FGSM: https://arxiv.org/pdf/1904.02884.pdf
-    noise = tf.nn.depthwise_conv2d(noise, T_kern, strides=[1, 1, 1, 1], padding='SAME')
+    # noise = tf.nn.depthwise_conv2d(noise, T_kern, strides=[1, 1, 1, 1], padding='SAME')
+
     # MI-FGSM: https://arxiv.org/pdf/1710.06081.pdf
     # noise = noise / tf.reduce_mean(tf.abs(noise), [1, 2, 3], keep_dims=True)
     # noise = momentum * grad + noise
 
-    # Projection iterative attacks
+    # Project cut noise
     amplification += beta * tf.sign(noise)
     cut_noise = tf.clip_by_value(abs(amplification) - eps, 0.0, 10000.0) * tf.sign(amplification)
     projection = gamma * tf.sign(project_noise(cut_noise, P_kern, kern_size))	
-    # Occasionally, when the adversarial examples are crafted for an ensemble of networks with residual block by combined methods, 
-    # you may neet to comment the following line to get better result
-    amplification += projection
-    x = x + beta * tf.sign(noise) + projection
 
+    # Occasionally, when the adversarial examples are crafted for an ensemble of networks with residual block by combined methods, 
+    # you may neet to comment the following line to get better result.
+    amplification += projection
+
+    x = x + beta * tf.sign(noise) + projection
     x = tf.clip_by_value(x, x_min, x_max)
     i = tf.add(i, 1)
+    
     return x, y, i, x_max, x_min, noise, amplification
 
 def stop(x, y, i, x_max, x_min, grad, amplification):
