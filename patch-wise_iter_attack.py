@@ -64,7 +64,7 @@ model_checkpoint_map = {
     'R152-D': os.path.join(FLAGS.checkpoint_path, 'R152-Denoise_rename.npz'),
 }
 
-P_kern, kern_size = project_kern(7)
+P_kern, kern_size = project_kern(3)
 T_kern = gkern(15, 3)
 
 def graph(x, y, i, x_max, x_min, grad, amplification):
