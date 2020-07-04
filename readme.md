@@ -1,7 +1,7 @@
 # Patch-wise iterative  Attacks (accpeted by ECCV2020)
 In this paper, we propose a novel  **patch-wise iterative  Attacks** by using the amplification factor and guiding gradient to its feasible direction. Comparing with state-of-the-art attacks, we further improve the success rate by 3.7\% for normally trained models and 9.1\% for defense models on average. We hope that the proposed methods will serve as a benchmark for evaluating the robustness of various deep models and defense methods.
 
-**Our paper is still under revision, so we uploaded the temporary version (`6114-temporary version.pdf`) for you to read.  If there is any mistake, please let me know. Thanks~** 
+**Our paper is still under revision, so we upload the temporary version (`6114-temporary version.pdf`) for you to read.  If there is any mistake, please let me know. Thanks~** 
 
 ## Implementation
 - Tensorflow 1.14, Python3.7
