@@ -37,7 +37,7 @@ tf.flags.DEFINE_integer('image_resize', 330, 'Height of each input images.')
 
 tf.flags.DEFINE_integer('batch_size', 10, 'How many images process at one time.')
 
-tf.flags.DEFINE_float('amplification_factor', 10.0, 'To amplifythe step size.')
+tf.flags.DEFINE_float('amplification_factor', 5.0, 'To amplifythe step size.')
 
 tf.flags.DEFINE_float('momentum', 1.0, 'Momentum.')
 
