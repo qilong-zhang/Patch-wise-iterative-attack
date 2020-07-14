@@ -75,8 +75,8 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
     momentum = FLAGS.momentum
     	
     # amplification factor
-    beta = alpha * FLAGS.amplification_factor
-    gamma = beta
+    alpha_beta = alpha * FLAGS.amplification_factor
+    gamma = alpha_beta
 
 
     # DIM: https://arxiv.org/abs/1803.06978
@@ -122,7 +122,7 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
     # noise = momentum * grad + noise
 
     # Project cut noise
-    amplification += beta * tf.sign(noise)
+    amplification += alpha_beta * tf.sign(noise)
     cut_noise = tf.clip_by_value(abs(amplification) - eps, 0.0, 10000.0) * tf.sign(amplification)
     projection = gamma * tf.sign(project_noise(cut_noise, P_kern, kern_size))	
 
