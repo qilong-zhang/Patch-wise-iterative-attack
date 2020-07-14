@@ -130,7 +130,7 @@ def graph(x, y, i, x_max, x_min, grad, amplification):
     # you may neet to comment the following line to get better result.
     amplification += projection
 
-    x = x + beta * tf.sign(noise) + projection
+    x = x + alpha_beta * tf.sign(noise) + projection
     x = tf.clip_by_value(x, x_min, x_max)
     i = tf.add(i, 1)
     
