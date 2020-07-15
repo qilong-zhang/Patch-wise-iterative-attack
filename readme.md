@@ -1,7 +1,7 @@
 # Patch-wise Iterative  Attack (accpeted by ECCV2020)
-In this paper, we propose a novel  **patch-wise iterative  Attack** by using the amplification factor and guiding gradient to its feasible direction. Comparing with state-of-the-art attacks, we further improve the success rate by 3.7\% for normally trained models and 9.1\% for defense models on average. We hope that the proposed methods will serve as a benchmark for evaluating the robustness of various deep models and defense methods.
+This is the Tensorflow code for our paper [Patch-wise Attack for Fooling Deep Neural Network](http://arxiv.org/abs/2007.06765).  If necessary, we will consider releasing the PyTorch version of the code later.
 
-<font color = 'red'>**Our paper is still under revision, so we upload the temporary version (`6114-temporary version.pdf`) for you to read.  If there is any mistake, please let me know. Thanks~** </font>
+In our paper, we propose a novel  **patch-wise iterative  Attack** by using the amplification factor and guiding gradient to its feasible direction. Comparing with state-of-the-art attacks, we further improve the success rate by 3.7\% for normally trained models and 9.1\% for defense models on average. We hope that the proposed methods will serve as a benchmark for evaluating the robustness of various deep models and defense methods.
 
 ## Implementation
 - Tensorflow 1.14, Python3.7
