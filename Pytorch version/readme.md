@@ -4,7 +4,7 @@ This is the **Pytorch** code for our paper [Patch-wise Attack for Fooling Deep N
 In our paper, we propose a novel  **patch-wise iterative  Attack** by using the amplification factor and guiding gradient to its feasible direction. Comparing with state-of-the-art attacks, we further improve the success rate by 3.7\% for normally trained models and 9.1\% for defense models on average. We hope that the proposed methods will serve as a benchmark for evaluating the robustness of various deep models and defense methods.
 
 ## Implementation
-- Pytorch 1.5.1, Python3.7
+- Pytorch 1.5.1, Python3.7 
 
 - Run the code
 
