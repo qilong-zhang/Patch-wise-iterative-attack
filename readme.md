@@ -12,7 +12,7 @@ In our paper, we propose a novel  **patch-wise iterative  Attack** by using the 
 
   - [Normlly trained models](https://github.com/tensorflow/models/tree/master/research/slim#Pretrained)(DenseNet can be found in [here](https://github.com/flyyufelix/DenseNet-Keras))
   - [Ensemble  adversarial trained models](https://github.com/tensorflow/models/tree/master/research/adv_imagenet_models?spm=5176.12282029.0.0.3a9e79b7cynrQf)
-  - [Feature  Denoise](https://github.com/facebookresearch/ImageNet-Adversarial-Training)
+  - [Feature  Denoising](https://github.com/facebookresearch/ImageNet-Adversarial-Training)
 
 - Then put these models into ".models/"
 
