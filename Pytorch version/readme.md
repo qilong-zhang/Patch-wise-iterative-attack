@@ -8,6 +8,8 @@ In our paper, we propose a novel  **patch-wise iterative  Attack** by using the 
 ## Implementation
 - Pytorch 1.5.1, Python3.7 
 
+- Dataset could be found in tensorflow version (../dataset/images) which is already downloaded.
+
 - Run the code
 
   ```python
