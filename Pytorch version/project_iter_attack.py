@@ -70,16 +70,15 @@ def clip_by_tensor(t, t_min, t_max):
     return result
 
 
-def graph(x, gt, x_min, x_max, model=None):
+def graph(x, gt, x_min, x_max):
     eps = opt.max_epsilon / 255.0
     num_iter = opt.num_iter_set
     alpha = eps / num_iter
     alpha_beta = alpha * opt.amplification
     gamma = alpha_beta
 
-    if model is None:
-        inc_v3 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
-                                    models.inception_v3(pretrained=True).eval().cuda())
+    inc_v3 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
+                                models.inception_v3(pretrained=True).eval().cuda())
     x.requires_grad = True
     amplification = 0.0
     for i in range(num_iter):
@@ -149,7 +148,7 @@ def main():
         images = images.cuda()
         images_min = clip_by_tensor(images - 16 / 255.0, 0.0, 1.0)
         images_max = clip_by_tensor(images + 16 / 255.0, 0.0, 1.0)
-        adv_img = graph(images, gt, images_min, images_max, inc_v3)
+        adv_img = graph(images, gt, images_min, images_max)
 
 
         with torch.no_grad():
