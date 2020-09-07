@@ -35,6 +35,7 @@ parser.add_argument("--prob", type=float, default=0.7, help="probability of usin
 
 opt = parser.parse_args()
 
+torch.backends.cudnn.benchmark = True
 
 transforms = T.Compose([T.CenterCrop(opt.image_width), T.ToTensor()])
 
@@ -65,25 +66,25 @@ def clip_by_tensor(t, t_min, t_max):
     # t = t.float()
     # t_min = t_min.cuda()
     # t_max = t_max.cuda()
-    result = (t >= t_min).float() * t + (t < t_min).float() * t_min
-    result = (result <= t_max).float() * result + (result > t_max).float() * t_max
+    result = t.clamp(t_min, t_max)
     return result
 
 
-def graph(x, gt, x_min, x_max):
+def graph(x, gt, x_min, x_max, model=None):
     eps = opt.max_epsilon / 255.0
     num_iter = opt.num_iter_set
     alpha = eps / num_iter
     alpha_beta = alpha * opt.amplification
     gamma = alpha_beta
 
-    inc_v3 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
-                                 models.inception_v3(pretrained=True).eval().cuda())
+    if model is None:
+        inc_v3 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
+                                    models.inception_v3(pretrained=True).eval().cuda())
     x.requires_grad = True
     amplification = 0.0
     for i in range(num_iter):
         zero_gradients(x)
-        output_v3 = inc_v3(x)
+        output_v3 = model(x)
         loss = F.cross_entropy(output_v3, gt)
         loss.backward()
         noise = x.grad.data
@@ -130,6 +131,14 @@ def main():
                                           models.resnext50_32x4d(pretrained=True).eval().cuda())
     dense161 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
                                    models.densenet169(pretrained=True).eval().cuda())
+    for parameter in res152.parameters():
+        parameter.requires_grad = False
+    for parameter in inc_v3.parameters():
+        parameter.requires_grad = False
+    for parameter in resnext50_32x4d.parameters():
+        parameter.requires_grad = False
+    for parameter in dense161.parameters():
+        parameter.requires_grad = False
 
     X = ImageNet(opt.input_dir, opt.input_csv, transforms)
     data_loader = DataLoader(X, batch_size=opt.batch_size, shuffle=False, pin_memory=True, num_workers=8)
@@ -140,14 +149,14 @@ def main():
         images = images.cuda()
         images_min = clip_by_tensor(images - 16 / 255.0, 0.0, 1.0)
         images_max = clip_by_tensor(images + 16 / 255.0, 0.0, 1.0)
-        adv_img = graph(images, gt, images_min, images_max)
+        adv_img = graph(images, gt, images_min, images_max, inc_v3)
 
 
         with torch.no_grad():
-            sum_res152 += (res152(adv_img).max(1)[1] != gt).detach().cpu().sum()
-            sum_v3 += (inc_v3(adv_img).max(1)[1] != gt).detach().cpu().sum()
-            sum_rext += (resnext50_32x4d(adv_img).max(1)[1] != gt).detach().cpu().sum()
-            sum_den += (dense161(adv_img).max(1)[1] != gt).detach().cpu().sum()
+            sum_res152 += (res152(adv_img).argmax(1) != gt).detach().sum().cpu()
+            sum_v3 += (inc_v3(adv_img).argmax(1) != gt).detach().sum().cpu()
+            sum_rext += (resnext50_32x4d(adv_img).argmax(1) != gt).detach().sum().cpu()
+            sum_den += (dense161(adv_img).argmax(1) != gt).detach().sum().cpu()
 
     print('inc_v3 = {:.2%}'.format(sum_v3 / 1000.0))
     print('res152 = {:.2%}'.format(sum_res152 / 1000.0))
