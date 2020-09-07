@@ -63,9 +63,6 @@ def clip_by_tensor(t, t_min, t_max):
     :param t_max: max
     :return: cliped tensor
     """
-    # t = t.float()
-    # t_min = t_min.cuda()
-    # t_max = t_max.cuda()
     result = t.clamp(t_min, t_max)
     return result
 
