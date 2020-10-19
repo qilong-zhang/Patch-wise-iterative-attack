@@ -63,7 +63,8 @@ def clip_by_tensor(t, t_min, t_max):
     :param t_max: max
     :return: cliped tensor
     """
-    result = t.clamp(t_min, t_max)
+    result = (t >= t_min).float() * t + (t < t_min).float() * t_min
+    result = (result <= t_max).float() * result + (result > t_max).float() * t_max
     return result
 
 
@@ -74,7 +75,7 @@ def graph(x, gt, x_min, x_max):
     alpha_beta = alpha * opt.amplification
     gamma = alpha_beta
 
-    inc_v3 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
+    model = torch.nn.Sequential(Normalize(opt.mean, opt.std),
                                 models.inception_v3(pretrained=True).eval().cuda())
     x.requires_grad = True
     amplification = 0.0
@@ -127,14 +128,7 @@ def main():
                                           models.resnext50_32x4d(pretrained=True).eval().cuda())
     dense161 = torch.nn.Sequential(Normalize(opt.mean, opt.std),
                                    models.densenet169(pretrained=True).eval().cuda())
-    for parameter in res152.parameters():
-        parameter.requires_grad = False
-    for parameter in inc_v3.parameters():
-        parameter.requires_grad = False
-    for parameter in resnext50_32x4d.parameters():
-        parameter.requires_grad = False
-    for parameter in dense161.parameters():
-        parameter.requires_grad = False
+
 
     X = ImageNet(opt.input_dir, opt.input_csv, transforms)
     data_loader = DataLoader(X, batch_size=opt.batch_size, shuffle=False, pin_memory=True, num_workers=8)
@@ -143,8 +137,8 @@ def main():
     for images, _,  gt_cpu in tqdm(data_loader):
         gt = gt_cpu.cuda()
         images = images.cuda()
-        images_min = clip_by_tensor(images - 16 / 255.0, 0.0, 1.0)
-        images_max = clip_by_tensor(images + 16 / 255.0, 0.0, 1.0)
+        images_min = clip_by_tensor(images - opt.max_epsilon / 255.0, 0.0, 1.0)
+        images_max = clip_by_tensor(images + opt.max_epsilon / 255.0, 0.0, 1.0)
         adv_img = graph(images, gt, images_min, images_max)
 
 
