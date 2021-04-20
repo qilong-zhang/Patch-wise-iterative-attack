@@ -3,7 +3,7 @@ This is the **Tensorflow code** for our paper [Patch-wise Attack for Fooling Dee
 
 In our paper, we propose a novel  **Patch-wise Iterative Method** by using the amplification factor and guiding gradient to its feasible direction. Comparing with state-of-the-art attacks, we further improve the success rate by 3.7\% for normally trained models and 9.1\% for defense models on average. We hope that the proposed methods will serve as a benchmark for evaluating the robustness of various deep models and defense methods.
 
-**In targeted attack case**, we extend our **Patch-wise iterative method to Patch-wise++ iterative method**. More details can be found from [here](https://github.com/qilong-zhang/Targeted_Patch-wise-plusplus_iterative_attack).
+**In targeted attack case**, we extend our Patch-wise iterative method to **Patch-wise++ iterative method**. More details can be found from [here](https://github.com/qilong-zhang/Targeted_Patch-wise-plusplus_iterative_attack).
 
 ## Implementation
 - Tensorflow 1.14, Python3.7
