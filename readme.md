@@ -39,7 +39,7 @@ In our paper, we propose a novel  **Patch-wise Iterative Method** by using the a
 If you find this work is useful in your research, please consider citing:
 
 ```
-@inproceedings{Zhang2020PatchWise,
+@inproceedings{GaoZhang2020PatchWise,
     title={Patch-wise Attack for Fooling Deep Neural Network},
     author={Gao, Lianli and Zhang, Qilong and Song, Jingkuan and Liu, Xianglong and Shen, Hengtao},
     Booktitle = {European Conference on Computer Vision},
