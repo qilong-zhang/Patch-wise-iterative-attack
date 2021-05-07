@@ -6,7 +6,7 @@ In our paper, we propose a novel  **Patch-wise Iterative Method** by using the a
 **In targeted attack case**, we extend our Patch-wise iterative method to **Patch-wise++ iterative method**. More details can be found from [here](https://github.com/qilong-zhang/Targeted_Patch-wise-plusplus_iterative_attack).
 
 ## Implementation
-- Tensorflow 1.14, Python3.7
+- Tensorflow 1.14, gast 0.2.2, Python3.7
 
 - Download the models
 
