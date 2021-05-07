@@ -11,7 +11,7 @@ In our paper, we propose a novel  **Patch-wise Iterative Method** by using the a
 - Download the models
 
   - [Normlly trained models](https://github.com/tensorflow/models/tree/master/research/slim#Pretrained) (DenseNet can be found in [here](https://github.com/flyyufelix/DenseNet-Keras))
-  - [Ensemble  adversarial trained models](https://github.com/tensorflow/models/tree/master/research/adv_imagenet_models?spm=5176.12282029.0.0.3a9e79b7cynrQf)
+  - [Ensemble  adversarial trained models](https://github.com/tensorflow/models/tree/archive/research/adv_imagenet_models)
   - [Feature  Denoising](https://github.com/facebookresearch/ImageNet-Adversarial-Training)
 
 - Then put these models into ".models/"
