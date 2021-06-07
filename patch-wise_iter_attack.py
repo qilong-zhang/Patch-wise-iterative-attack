@@ -11,7 +11,7 @@ from tqdm import tqdm
 from tensorpack import TowerContext
 from nets import inception_v3, inception_v4, inception_resnet_v2, resnet_v2, densenet, fdnets
 from tensorpack.tfutils import get_model_loader
-from tensorpack.tfutils.scope_utils import auto_reuse_variable_scope
+from tensorpack.tfutils.scope_utils import auto_reuse_variable_scope 
 
 slim = tf.contrib.slim
 
