@@ -48,12 +48,12 @@ def project_kern(kern_size):
     stack_kern = torch.tensor(stack_kern).cuda()
     return stack_kern, kern_size // 2
 
-def project_noise(x, stack_kern, kern_size):
+def project_noise(x, stack_kern, padding_size):
     # x = tf.pad(x, [[0,0],[kern_size,kern_size],[kern_size,kern_size],[0,0]], "CONSTANT")
-    x = F.conv2d(x, stack_kern, padding = (kern_size, kern_size), groups=3)
+    x = F.conv2d(x, stack_kern, padding = (padding_size, padding_size), groups=3)
     return x
 
-stack_kern, kern_size = project_kern(3)
+stack_kern, padding_size = project_kern(3)
 
 def clip_by_tensor(t, t_min, t_max):
     """
@@ -93,7 +93,7 @@ def graph(x, gt, x_min, x_max):
 
         amplification += alpha_beta * torch.sign(noise)
         cut_noise = torch.clamp(abs(amplification) - eps, 0, 10000.0) * torch.sign(amplification)
-        projection = gamma * torch.sign(project_noise(cut_noise, stack_kern, kern_size))
+        projection = gamma * torch.sign(project_noise(cut_noise, stack_kern, padding_size))
         amplification += projection
 
         # x = x + alpha * torch.sign(noise)
