@@ -32,7 +32,7 @@ If you find this work is useful in your research, please consider citing:
 ```
 @inproceedings{GaoZhang2020PatchWise,
     title={Patch-wise Attack for Fooling Deep Neural Network},
-    author={Gao, Lianli and Zhang, Qilong and Song, jingkuan and Liu, Xianglong and Shen, Hengtao},
+    author={Gao, Lianli and Zhang, Qilong and Song, Jingkuan and Liu, Xianglong and Shen, Hengtao},
     Booktitle = {European Conference on Computer Vision},
     year={2020}
 }
