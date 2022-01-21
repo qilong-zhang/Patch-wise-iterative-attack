@@ -46,8 +46,8 @@ If you find this work is useful in your research, please consider citing:
                Xianglong Liu and
                Heng Tao Shen},
   title     = {Patch-Wise Attack for Fooling Deep Neural Network},
-  Booktitle = {International Conference on Learning Representations},
-  year      = {2022}
+  Booktitle = {European Conference on Computer Vision},
+  year      = {2020}
 }
 ```
 
